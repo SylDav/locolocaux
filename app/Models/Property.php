@@ -12,12 +12,25 @@ class Property extends Model
         'agency_id',
         'owner_id',
         'address_id',
+        'reference',
         'title',
         'type',
-        'surface',
+        'property_type',
+        'surface_area',
         'land',
         'rooms',
+        'bedrooms',
+        'floor',
+        'floor_count',
+        'construction_year',
+        'heating_type',
+        'energy_class',
+        'ges',
+        'furnished',
         'rent_amount',
+        'price',
+        'charges',
+        'property_tax',
         'status',
         'description',
     ];
@@ -26,7 +39,21 @@ class Property extends Model
         'surface' => 'float',
         'land' => 'float',
         'rooms' => 'integer',
+        'bedrooms' => 'integer',
+        'floor' => 'integer',
+        'floor_count' => 'integer',
+        'construction_year' => 'integer',
+        'furnished' => 'boolean',
         'rent_amount' => 'decimal:2',
+        'charges' => 'decimal:2',
+        'property_tax' => 'decimal:2',
+    ];
+    
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'construction_year',
     ];
 
     protected $with = ['agency', 'owner', 'address'];

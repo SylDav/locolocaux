@@ -11,7 +11,14 @@ class Company extends Model
         'contact_id',
         'address_id',
         'name',
+        'siret',
+        'vat_number',
         'logo',
+    ];
+    
+    protected $casts = [
+        'siret' => 'string',
+        'vat_number' => 'string',
     ];
 
     protected $with = ['contact', 'address'];

@@ -13,10 +13,11 @@ class Lease extends Model
         'tenant_id',
         'start_date',
         'end_date',
-        'rent',
-        'charges',
-        'deposit',
-        'payment_day',
+        'rent_amount',
+        'charges_amount',
+        'deposit_amount',
+        'payment_due_day',
+        'payment_method',
         'status',
         'notes',
     ];
@@ -24,10 +25,33 @@ class Lease extends Model
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
-        'rent' => 'decimal:2',
-        'charges' => 'decimal:2',
-        'deposit' => 'decimal:2',
-        'payment_day' => 'integer',
+        'rent_amount' => 'decimal:2',
+        'charges_amount' => 'decimal:2',
+        'deposit_amount' => 'decimal:2',
+        'payment_due_day' => 'integer',
+    ];
+    
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+    
+    protected $enums = [
+        'status' => [
+            'draft' => 'Brouillon',
+            'active' => 'Actif',
+            'terminated' => 'Résilié',
+            'cancelled' => 'Annulé',
+        ],
+        'payment_method' => [
+            'bank_transfer' => 'Virement bancaire',
+            'check' => 'Chèque',
+            'cash' => 'Espèces',
+            'direct_debit' => 'Prélèvement automatique',
+        ],
     ];
 
     protected $with = ['property', 'tenant', 'payments'];
@@ -45,6 +69,30 @@ class Lease extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the human-readable values for enums
+     *
+     * @param string $enum
+     * @return array
+     */
+    public static function getEnumOptions(string $enum): array
+    {
+        return [
+            'status' => [
+                'draft' => 'Brouillon',
+                'active' => 'Actif',
+                'terminated' => 'Résilié',
+                'cancelled' => 'Annulé',
+            ],
+            'payment_method' => [
+                'bank_transfer' => 'Virement bancaire',
+                'check' => 'Chèque',
+                'cash' => 'Espèces',
+                'direct_debit' => 'Prélèvement automatique',
+            ],
+        ][$enum] ?? [];
     }
 
     public function documents(): HasMany

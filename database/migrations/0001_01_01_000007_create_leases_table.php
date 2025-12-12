@@ -17,11 +17,12 @@ return new class extends Migration
             $table->foreignId('tenant_id')->constrained('users')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
-            $table->decimal('rent', 10, 2);
-            $table->decimal('charges', 10, 2)->default(0);
-            $table->decimal('deposit', 10, 2);
-            $table->integer('payment_day');
-            $table->enum('status', ['active', 'ended', 'pending'])->default('pending');
+            $table->decimal('rent_amount', 10, 2);
+            $table->decimal('charges_amount', 10, 2)->default(0);
+            $table->decimal('deposit_amount', 10, 2);
+            $table->integer('payment_due_day');
+            $table->enum('payment_method', ['bank_transfer', 'check', 'cash', 'direct_debit'])->default('bank_transfer');
+            $table->enum('status', ['draft', 'active', 'terminated', 'cancelled'])->default('active');
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('contact_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('address_id')->nullable()->constrained()->onDelete('set null');
             $table->string('name');
+            $table->string('siret')->unique();
+            $table->string('vat_number')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
             $table->softDeletes();

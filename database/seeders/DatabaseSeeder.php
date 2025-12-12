@@ -13,11 +13,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create admin user
+        $admin = User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        // Create other seeders
+        $this->call([
+            CompanySeeder::class,  // Creates companies, agencies, properties, and basic users
+            LeaseSeeder::class,    // Creates leases for some properties
+            TicketSeeder::class,   // Creates support tickets
+        ]);
+
+        // // Create additional users with specific roles
+        // User::factory()->create([
+        //     'name' => 'Agency Admin',
+        //     'email' => 'agency@example.com',
+        //     'password' => bcrypt('password'),
+        //     'role' => 'agency_admin',
+        // ]);
+
+        // User::factory()->create([
+        //     'name' => 'Property Owner',
+        //     'email' => 'owner@example.com',
+        //     'password' => bcrypt('password'),
+        //     'role' => 'owner',
+        // ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Tenant',
+            'email' => 'tenant@example.com',
+            'password' => bcrypt('password'),
         ]);
     }
 }
