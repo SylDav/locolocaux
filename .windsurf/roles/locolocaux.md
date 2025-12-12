@@ -213,46 +213,53 @@ Windsurf doit fournir sous forme ordonnée :
  🗂️ **Base de données (dbdiagram.io)**
 --------------------------------------
 
-```sql
-Table companies {
+```Table companies {
   id int [pk, increment]
+  contact_id int [ref: > contacts.id]
+  address_id int [ref: > addresses.id]
   name varchar
-  created_at datetime
-  updated_at datetime
+  logo varchar
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table agencies {
   id int [pk, increment]
   company_id int [ref: > companies.id]
+  contact_id int [ref: > contacts.id]
+  address_id int [ref: > addresses.id]
   name varchar
-  address varchar
-  created_at datetime
-  updated_at datetime
+  logo varchar
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table users {
   id int [pk, increment]
   agency_id int [ref: > agencies.id]
+  contact_id int [ref: > contacts.id]
+  identity_id int [ref: > identities.id]
   email varchar [unique]
   password varchar
-  first_name varchar
-  last_name varchar
-  roles json
-  created_at datetime
-  updated_at datetime
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table properties {
   id int [pk, increment]
   agency_id int [ref: > agencies.id]
   owner_id int [ref: > users.id]
+  address_id int [ref: > addresses.id]
   title varchar
-  address varchar
-  surface int
+  type varchar // maison, appartement, studio...
+  surface float
+  land float
   rooms int
-  rent_price decimal
-  created_at datetime
-  updated_at datetime
+  rent_amount decimal
+  status varchar // libre, loue, maintenance
+  description text
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table leases {
@@ -261,18 +268,59 @@ Table leases {
   tenant_id int [ref: > users.id]
   start_date date
   end_date date
-  rent_amount decimal
-  deposit_amount decimal
-  created_at datetime
-  updated_at datetime
+  rent decimal
+  charges decimal
+  deposit decimal
+  payment_day int
+  status varchar // actif, termine, en_attente
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table payments {
   id int [pk, increment]
   lease_id int [ref: > leases.id]
   amount decimal
-  paid_at datetime
-  created_at datetime
+  paid_at date
+  status varchar // payé, en_attente, en_retard
+  method varchar // carte, virement, espèces
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table visits {
+  id int [pk, increment]
+  property_id int [ref: > properties.id]
+  agent_id int [ref: > users.id]
+  client_name varchar
+  scheduled_at datetime
+  status varchar // prévu, effectué, annulé
+  notes text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table documents {
+  id int [pk, increment]
+  user_id int [ref: > users.id]
+  property_id int [ref: > properties.id]
+  lease_id int [ref: > leases.id]
+  name varchar
+  file_path varchar
+  type varchar // contrat, quittance, justificatif...
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table messages {
+  id int [pk, increment]
+  sender_id int [ref: > users.id]
+  receiver_id int [ref: > users.id]
+  subject varchar
+  content text
+  read boolean
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table tickets {
@@ -286,11 +334,31 @@ Table tickets {
   updated_at datetime
 }
 
-Table messages {
+Table contacts {
   id int [pk, increment]
-  sender_id int [ref: > users.id]
-  recipient_id int [ref: > users.id]
-  content text
-  created_at datetime
+  phone varchar
+  email varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table addresses {
+  id int [pk, increment]
+  address text
+  postal_code varchar
+  city varchar
+  country varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table identities {
+  id int [pk, increment]
+  lastname varchar
+  firstname varchar
+  gender varchar
+  birthdate varchar
+  created_at timestamp
+  updated_at timestamp
 }
 ```
