@@ -273,6 +273,7 @@ Table leases {
   deposit decimal
   payment_day int
   status varchar // actif, termine, en_attente
+  notes text
   created_at timestamp
   updated_at timestamp
 }
@@ -284,6 +285,8 @@ Table payments {
   paid_at date
   status varchar // payé, en_attente, en_retard
   method varchar // carte, virement, espèces
+  reference varchar
+  notes text
   created_at timestamp
   updated_at timestamp
 }
@@ -293,7 +296,10 @@ Table visits {
   property_id int [ref: > properties.id]
   agent_id int [ref: > users.id]
   client_name varchar
+  client_email varchar
+  client_phone varchar
   scheduled_at datetime
+  ended_at datetime
   status varchar // prévu, effectué, annulé
   notes text
   created_at timestamp
@@ -308,6 +314,7 @@ Table documents {
   name varchar
   file_path varchar
   type varchar // contrat, quittance, justificatif...
+  notes text
   created_at timestamp
   updated_at timestamp
 }
@@ -316,6 +323,8 @@ Table messages {
   id int [pk, increment]
   sender_id int [ref: > users.id]
   receiver_id int [ref: > users.id]
+  property_id int [ref: > properties.id]
+  lease_id int [ref: > leases.id]
   subject varchar
   content text
   read boolean
@@ -327,9 +336,12 @@ Table tickets {
   id int [pk, increment]
   property_id int [ref: > properties.id]
   tenant_id int [ref: > users.id]
+  title varchar
+  description text
   status varchar
   priority varchar
-  description text
+  resolution_notes text
+  resolved_at datetime
   created_at datetime
   updated_at datetime
 }
