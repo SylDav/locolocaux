@@ -13,10 +13,10 @@ class CompanyForm
     {
         return $schema
             ->components([
-                Section::make('')
+                Section::make('Informations générales')
                     ->schema([
                         TextInput::make('name')
-                            ->label('Nom de l\'société')
+                            ->label('Nom de la société')
                             ->required(),
                         TextInput::make('siret')
                             ->label('SIRET')
@@ -28,34 +28,33 @@ class CompanyForm
                             ->default(null),
                     ]),
                     // ->columns(2),
-                    Section::make('')
-                        ->schema([
-                            Fieldset::make('Adresse')
-                                ->schema([
-                                    TextInput::make('street')
-                                        ->label('Rue')
-                                        ->required(),
-                                    TextInput::make('city')
-                                        ->label('Ville')
-                                        ->required(),
-                                    TextInput::make('postal_code')
-                                        ->label('Code postal')
-                                        ->required(),
-                                    TextInput::make('country')
-                                        ->label('Pays')
-                                        ->required(),
-                                ]),
-                            Fieldset::make('Contact')
-                                ->schema([
-                                    TextInput::make('phone')
-                                        ->label('Téléphone')
-                                        ->required(),
-                                    TextInput::make('email')
-                                        ->label('Email')
-                                        ->required(),
-                                ]),
-                            ])
-                ->collapsible(),
+                Section::make('')
+                    ->schema([
+                        Fieldset::make('Adresse')
+                            ->schema([
+                                TextInput::make('address.street')
+                                    ->label('Rue')
+                                    ->required(),
+                                TextInput::make('address.city')
+                                    ->label('Ville')
+                                    ->required(),
+                                TextInput::make('address.postal_code')
+                                    ->label('Code postal')
+                                    ->required(),
+                                TextInput::make('address.country')
+                                    ->label('Pays')
+                                    ->required(),
+                            ]),
+                        Fieldset::make('Contact')
+                            ->schema([
+                                TextInput::make('contact.phone')
+                                    ->label('Téléphone')
+                                    ->required(),
+                                TextInput::make('contact.email')
+                                    ->label('Email')
+                                    ->required(),
+                            ]),
+                    ]),
             ]);
     }
 }

@@ -7,9 +7,7 @@ use App\Filament\Resources\Companies\Pages\EditCompany;
 use App\Filament\Resources\Companies\Pages\ListCompanies;
 use App\Filament\Resources\Companies\Schemas\CompanyForm;
 use App\Filament\Resources\Companies\Tables\CompaniesTable;
-use App\Models\Address;
 use App\Models\Company;
-use App\Models\Contact;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -61,26 +59,4 @@ class CompanyResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
-
-    public static function mutateFormDataBeforeCreate(array $data): array
-    {
-        // Séparer address & contact
-        $addressData = [
-            'street' => $data['street'] ?? null,
-            'postal_code' => $data['postal_code'] ?? null,
-            'city' => $data['city'] ?? null,
-        ];
-        $address = Address::create($addressData);
-        $data['address_id'] = $address->id;
-
-        $contactData = [
-            'email' => $data['email'] ?? null,
-            'phone' => $data['phone'] ?? null,
-        ];
-        $contact = Contact::create($contactData);
-        $data['contact_id'] = $contact->id;
-
-        return $data;
-    }
-
 }
