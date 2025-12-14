@@ -20,8 +20,6 @@ class Document extends Model
         'document_date' => 'date',
     ];
 
-    protected $with = ['user'];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

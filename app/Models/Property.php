@@ -56,8 +56,6 @@ class Property extends Model
         'construction_year',
     ];
 
-    protected $with = ['agency', 'owner', 'address'];
-
     public function agency(): BelongsTo
     {
         return $this->belongsTo(Agency::class);

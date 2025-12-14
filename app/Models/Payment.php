@@ -21,8 +21,6 @@ class Payment extends Model
         'paid_at' => 'date',
     ];
 
-    protected $with = ['lease'];
-
     public function lease(): BelongsTo
     {
         return $this->belongsTo(Lease::class);

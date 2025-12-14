@@ -21,7 +21,7 @@ class Company extends Model
         'vat_number' => 'string',
     ];
 
-    protected $with = ['contact', 'address'];
+    public const RELATIONS = ['contact', 'address'];
 
     public function contact(): BelongsTo
     {

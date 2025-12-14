@@ -15,8 +15,6 @@ class Agency extends Model
         'logo',
     ];
 
-    protected $with = ['company', 'contact', 'address'];
-
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

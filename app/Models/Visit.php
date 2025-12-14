@@ -23,7 +23,7 @@ class Visit extends Model
         'ended_at' => 'datetime',
     ];
 
-    protected $with = ['property', 'agent'];
+    public const RELATIONS = ['property', 'agent'];
 
     public function property(): BelongsTo
     {

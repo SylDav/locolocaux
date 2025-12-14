@@ -54,8 +54,6 @@ class Lease extends Model
         ],
     ];
 
-    protected $with = ['property', 'tenant', 'payments'];
-
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class, 'property_id');

@@ -23,8 +23,6 @@ class Ticket extends Model
         'resolved_at' => 'datetime',
     ];
 
-    protected $with = ['property', 'tenant', 'assignedTo'];
-
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
@@ -38,10 +36,5 @@ class Ticket extends Model
     public function assignedTo(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
-    }
-
-    public function comments(): MorphMany
-    {
-        return $this->morphMany(Comment::class, 'commentable');
     }
 }
